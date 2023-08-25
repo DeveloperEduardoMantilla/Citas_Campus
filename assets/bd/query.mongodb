@@ -1,0 +1,324 @@
+use("citas_campus");
+db.createCollection("tipo_documento",{
+    validator: {
+    $jsonSchema: {
+        bsonType: "object",
+        required: ["tipdoc_id","tipdoc_nombre","tipdoc_abreviatura"],
+        properties: {
+            tipdoc_id:{
+                bsonType: 'int',
+                description:"El campo tipdoc_id debe ser de tipo int"
+            },
+            tipdoc_nombre: {
+                bsonType: "string",
+                description:"El campo tipdoc_nombre debe ser de tipo string"
+            },
+            tipdoc_abreviatura: {
+                bsonType: "string",
+                description:"El campo tipdoc_abreviatura debe ser de tipo string"
+            }
+        },
+    },
+    },
+});
+
+use("citas_campus");
+db.tipo_documento.insertOne({
+    "tipdoc_id":1,
+    "tipdoc_nombre":"Cedula de Ciudadania",
+    "tipdoc_abreviatura":"C.c"
+});
+
+use("citas_campus");
+db.createCollection("genero",{
+    validator: {
+    $jsonSchema: {
+        bsonType: "object",
+        required: ["gen_id","gen_nombre","gen_abreviatura"],
+        properties: {
+            gen_id:{
+                bsonType: 'int',
+                description:"El campo gen_id debe ser de tipo int"
+            },
+            gen_nombre: {
+                bsonType: "string",
+                description:"El campo gen_nombre debe ser de tipo string"
+            },
+            gen_abreviatura: {
+                bsonType: "string",
+                description:"El campo gen_abreviatura debe ser de tipo string"
+            }
+        },
+    },
+    },
+});
+
+use("citas_campus");
+db.genero.insertOne({
+    "gen_id":1,
+    "gen_nombre":"Masculino",
+    "gen_abreviatura":"M"
+});
+
+use("citas_campus");
+db.createCollection("acudiente",{
+    validator: {
+    $jsonSchema: {
+        bsonType: "object",
+        required: ["acu_codigo","acu_nombreCompleto"],
+        properties: {
+            acu_codigo:{
+                bsonType: 'int',
+                description:"El campo acu_codigo debe ser de tipo int"
+            },
+            acu_nombreCompleto: {
+                bsonType: "string",
+                description:"El campo acu_nombreCompleto debe ser de tipo string"
+            },
+            acu_telefono: {
+                bsonType: "string",
+                description:"El campo acu_telefono debe ser de tipo string"
+            },
+            acu_direccion: {
+                bsonType: "string",
+                description:"El campo acu_direccion debe ser de tipo string"
+            }
+        },
+    },
+    },
+});
+
+use("citas_campus");
+db.acudiente.insertOne({
+    "acu_codigo":1,
+    "acu_nombreCompleto":"Edgar Eduardo Mantilla Garcia",
+    "acu_telefono":"3167948956",
+    "acu_direccion":"Lebrija Santander",
+});
+
+
+use("citas_campus");
+db.createCollection("usuario",{
+    validator: {
+    $jsonSchema: {
+        bsonType: "object",
+        required: ["usu_id","usu_nombre","usu_primer_apellido_usuar","usu_telefono","usu_tipodoc","usu_genero","usu_acudiente"],
+        properties: {
+            usu_id:{
+                bsonType: 'int',
+                description:"El campo usu_id debe ser de tipo int"
+            },
+            usu_nombre: {
+                bsonType: "string",
+                description:"El campo usu_nombre debe ser de tipo string"
+            },
+            usu_segdo_nombre: {
+                bsonType: "string",
+                description:"El campo usu_segdo_nombre debe ser de tipo string"
+            },
+            usu_primer_apellido_usuar: {
+                bsonType: "string",
+                description:"El campo usu_primer_apellido_usuar debe ser de tipo string"
+            },
+            usu_segdo_apellido_usuar: {
+                bsonType: "string",
+                description:"El campo usu_segdo_apellido_usuar debe ser de tipo string"
+            },
+            usu_telefono: {
+                bsonType: "string",
+                description:"El campo usu_telefono debe ser de tipo string"
+            },
+            usu_direccion: {
+                bsonType: "string",
+                description:"El campo usu_direccion debe ser de tipo string"
+            },
+            usu_email: {
+                bsonType: "string",
+                description:"El campo usu_email debe ser de tipo string"
+            },
+            usu_tipodoc: {
+                bsonType: "int",
+                description:"El campo usu_tipodoc debe ser de tipo int"
+            },
+            usu_genero: {
+                bsonType: "int",
+                description:"El campo usu_genero debe ser de tipo int"
+            },
+            usu_acudiente: {
+                bsonType: "int",
+                description:"El campo usu_acudiente debe ser de tipo int"
+            }
+        },
+    },
+    },
+});
+
+use("citas_campus");
+db.usuario.insertOne({
+    "usu_id":1,
+    "usu_nombre":"Edgar",
+    "usu_segdo_nombre":"Eduardo",
+    "usu_primer_apellido_usuar":"Mantilla",
+    "usu_segdo_apellido_usuar":"Garcia",
+    "usu_telefono":"3167967956",
+    "usu_direccion":"Lebrija Santander",
+    "usu_email":"eduardo@email.com",
+    "usu_tipodoc":1,
+    "usu_genero":1,
+    "usu_acudiente":1,
+});
+
+use("citas_campus");
+db.createCollection("cita",{
+    validator: {
+    $jsonSchema: {
+        bsonType: "object",
+        required: ["cit_codigo","cit_fecha","cit_estadoCita","cit_medico","cit_datosUsuario"],
+        properties: {
+            cit_codigo:{
+                bsonType: 'int',
+                description:"El campo cit_codigo debe ser de tipo int"
+            },
+            cit_fecha: {
+                bsonType: "string",
+                description:"El campo cit_fecha debe ser de tipo string"
+            },
+            cit_estadoCita: {
+                bsonType: "int",
+                description:"El campo cit_estadoCita debe ser de tipo int"
+            },
+            cit_medico: {
+                bsonType: "int",
+                description:"El campo cit_medico debe ser de tipo int"
+            },
+            cit_datosUsuario: {
+                bsonType: "int",
+                description:"El campo cit_datosUsuario debe ser de tipo int"
+            }
+        },
+    },
+    },
+});
+
+use("citas_campus");
+db.cita.insertOne({
+    "cit_codigo":1,
+    "cit_fecha":"2023-10-15",
+    "cit_estadoCita":1,
+    "cit_medico":1,
+    "cit_datosUsuario":1
+});
+
+use("citas_campus");
+db.createCollection("estado_cita",{
+    validator: {
+    $jsonSchema: {
+        bsonType: "object",
+        required: ["estcita_id","estcita_nombre"],
+        properties: {
+            estcita_id:{
+                bsonType: 'int',
+                description:"El campo estcita_id debe ser de tipo int"
+            },
+            estcita_nombre: {
+                bsonType: "string",
+                description:"El campo estcita_nombre debe ser de tipo string"
+            }
+        },
+    },
+    },
+});
+
+use("citas_campus");
+db.estado_cita.insertOne({
+    "estcita_id":1,
+    "estcita_nombre":"Espera"
+});
+
+use("citas_campus");
+db.createCollection("medico",{
+    validator: {
+    $jsonSchema: {
+        bsonType: "object",
+        required: ["med_nroMatriculaProsional","med_nombreCompleto","med_consultorio","med_especialidad"],
+        properties: {
+            med_nroMatriculaProsional:{
+                bsonType: 'int',
+                description:"El campo med_nroMatriculaProsional debe ser de tipo int"
+            },
+            med_nombreCompleto: {
+                bsonType: "string",
+                description:"El campo med_nombreCompleto debe ser de tipo string"
+            },
+            med_consultorio: {
+                bsonType: "int",
+                description:"El campo med_consultorio debe ser de tipo int"
+            },
+            med_especialidad: {
+                bsonType: "int",
+                description:"El campo med_especialidad debe ser de tipo int"
+            }
+        },
+    },
+    },
+});
+
+use("citas_campus");
+db.medico.insertOne({
+    "med_nroMatriculaProsional":1548,
+    "med_nombreCompleto":"John Salchichon",
+    "med_consultorio":1,
+    "med_especialidad":1
+});
+
+use("citas_campus");
+db.createCollection("especialidad",{
+    validator: {
+    $jsonSchema: {
+        bsonType: "object",
+        required: ["esp_id","esp_nombre"],
+        properties: {
+            esp_id:{
+                bsonType: 'int',
+                description:"El campo esp_id debe ser de tipo int"
+            },
+            esp_nombre: {
+                bsonType: "string",
+                description:"El campo esp_nombre debe ser de tipo string"
+            }
+        },
+    },
+    },
+});
+
+use("citas_campus");
+db.especialidad.insertOne({
+    "esp_id":1,
+    "esp_nombre":"Ojitos"
+});
+
+use("citas_campus");
+db.createCollection("consultorio",{
+    validator: {
+    $jsonSchema: {
+        bsonType: "object",
+        required: ["cons_codigo","cons_nombre"],
+        properties: {
+            cons_codigo:{
+                bsonType: 'int',
+                description:"El campo cons_codigo debe ser de tipo int"
+            },
+            cons_nombre: {
+                bsonType: "string",
+                description:"El campo cons_nombre debe ser de tipo string"
+            }
+        },
+    },
+    },
+});
+
+use("citas_campus");
+db.consultorio.insertOne({
+    "cons_codigo":1,
+    "cons_nombre":"Consultorio ABC"
+});
