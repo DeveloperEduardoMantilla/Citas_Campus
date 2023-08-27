@@ -46,4 +46,26 @@ appPaciente.get("/:idPaciente", appVerifyPaciente, async(req, res)=>{
       }
 })
 
+appPaciente.get("/medico/:idMedico", appVerifyPaciente, async(req, res)=>{
+    try {
+        let medicoId = parseInt(req.params.idMedico);
+        let db = await conx();
+        let collection = await db.collection("cita");
+        let consult = await collection
+          .find({cit_medico:medicoId},{
+            projection:{
+            "_id": 0,
+            "cita_codigo":"$cit_codigo",
+            "cita_fecha":"$cit_fecha",
+            "cita_estado":"$cit_estadoCita",
+            "cita_medico":"$cit_medico",
+            "cita_idUsuario":"$cit_datosUsuario"
+        }}).toArray();
+        res.status(200).send(consult);
+      } catch (err) {
+        res.sendStatus(500);
+        console.log(err);
+      }
+})
+
 export default appPaciente;
