@@ -169,6 +169,22 @@ db.usuario.insertOne({
 });
 
 use("citas_campus");
+db.usuario.insertOne({
+    "usu_id":2,
+    "usu_nombre":"William",
+    "usu_segdo_nombre":"Andres",
+    "usu_primer_apellido_usuar":"Mantilla",
+    "usu_segdo_apellido_usuar":"Garcia",
+    "usu_telefono":"3167967956",
+    "usu_direccion":"Lebrija Santander",
+    "usu_email":"eduardo@email.com",
+    "usu_tipodoc":1,
+    "usu_genero":1,
+    "usu_acudiente":1,
+});
+
+
+use("citas_campus");
 db.createCollection("cita",{
     validator: {
     $jsonSchema: {
