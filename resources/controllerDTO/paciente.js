@@ -71,12 +71,12 @@ __decorate([
     __metadata("design:type", String)
 ], dtoPaciente.prototype, "usu_tipodoc", void 0);
 __decorate([
-    Expose({ name: "usuario_genero" }),
+    Expose({ name: "paciente_genero" }),
     IsDefined({ message: () => { throw { status: 422, message: 'El campo usuario_genero es obligatorio' }; } }),
     __metadata("design:type", String)
 ], dtoPaciente.prototype, "usu_genero", void 0);
 __decorate([
-    Expose({ name: "usu_acudiente" }),
+    Expose({ name: "paciente_acudiente" }),
     IsDefined({ message: () => { throw { status: 422, message: 'El campo usu_acudiente es obligatorio' }; } }),
     __metadata("design:type", String)
 ], dtoPaciente.prototype, "usu_acudiente", void 0);

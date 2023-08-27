@@ -38,11 +38,11 @@ export class dtoPaciente{
     @IsDefined({message:()=>{throw{status:422, message:'El campo paciente_tipoDocumento es obligatorio'}}})
     usu_tipodoc:string;
 
-    @Expose({name:"usuario_genero"})
+    @Expose({name:"paciente_genero"})
     @IsDefined({message:()=>{throw{status:422, message:'El campo usuario_genero es obligatorio'}}})
     usu_genero:string;
 
-    @Expose({name:"usu_acudiente"})
+    @Expose({name:"paciente_acudiente"})
     @IsDefined({message:()=>{throw{status:422, message:'El campo usu_acudiente es obligatorio'}}})
     usu_acudiente:string;
 
