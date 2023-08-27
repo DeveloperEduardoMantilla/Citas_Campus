@@ -62,9 +62,68 @@ appPaciente.get("/medico/:idMedico", appVerifyPaciente, async(req, res)=>{
             "cita_idUsuario":"$cit_datosUsuario"
         }}).toArray();
         res.status(200).send(consult);
-      } catch (err) {
-        res.sendStatus(500);
-        console.log(err);
+      } catch (e) {
+        res.status(500).send("Erro=> "+e);
+      }
+})
+
+appPaciente.get("/consultoria/:idPaciente", appVerifyPaciente, async(req, res)=>{
+    try {
+        let pacienteId = parseInt(req.params.idPaciente);
+        let db = await conx();
+        let collection = await db.collection("cita");
+        let consult = await collection
+        .aggregate([
+            {
+          $match: {
+            cit_datosUsuario: pacienteId,
+          },
+        },
+        {
+          $lookup: {
+            from: "usuario",
+            localField: "cit_datosUsuario",
+            foreignField: "usu_id",
+            as: "datos_usuario",
+          },
+        },
+        {
+          $unwind: "$datos_usuario",
+        },
+        {
+          $lookup: {
+            from: "medico",
+            localField: "cit_medico",
+            foreignField: "med_nroMatriculaProsional",
+            as: "datos_medico",
+          },
+        },
+        {
+          $unwind: "$datos_medico",
+        },
+        {
+          $lookup: {
+            from: "consultorio",
+            localField: "datos_medico.med_consultorio",
+            foreignField: "cons_codigo",
+            as: "consultorio",
+          },
+        },
+        {
+          $unwind: "$consultorio",
+        },
+        {
+          $project: {
+            _id: 0,
+            datos_usuario: { usu_nombre: 1, usu_segdo_nombre: 1 },
+            consultorio: { cons_codigo: 1, cons_nombre:1 }
+          },
+        }
+      ])
+      .toArray();
+      res.status(200).send(consult);
+      } catch (e) {
+        res.status(500).send("Erro=> "+e);
       }
 })
 
