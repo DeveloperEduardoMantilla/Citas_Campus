@@ -288,6 +288,38 @@ db.medico.insertOne({
 });
 
 use("citas_campus");
+db.medico.aggregate([
+    {
+        $lookup: {
+            from: "especialidad",
+            localField: "med_especialidad",
+            foreignField: "esp_id",
+            as: "especialidad"
+        }
+    },
+    {
+        $unwind: "$especialidad"
+    },
+    {
+        $match: {
+            "especialidad.esp_nombre": "Ojitos"
+        }
+    },
+    {
+        $project: {
+          "_id":0,
+          "especialidad._id":0,
+          "especialidad.esp_id":0,
+          "medico_nroMatricula":"$med_nroMatriculaProsional",
+          "medico_nombreCompleto":"$med_nombreCompleto",
+          "medico_consultorio":"$med_consultorio",
+          "medico_especialidad":"$med_especialidad",
+
+        }
+    }
+]); 
+
+use("citas_campus");
 db.createCollection("especialidad",{
     validator: {
     $jsonSchema: {

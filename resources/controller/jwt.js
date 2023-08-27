@@ -4,6 +4,7 @@ import {Router} from "express";
 import {SignJWT, jwtVerify} from "jose";
 import {dtoPaciente} from "../controllerDTO/paciente.js";
 import {dtoCita} from "../controllerDTO/cita.js";
+import {dtoMedico} from "../controllerDTO/medico.js";
 import rateLimit from "express-rate-limit";
 
 
@@ -14,8 +15,9 @@ const JWTVerify = Router();
 
 const estructuraDto = (p1) =>{
     const match = {
-        'Paciente': dtoPaciente,
-        'Cita': dtoCita
+        'paciente': dtoPaciente,
+        'cita': dtoCita,
+        'medico': dtoMedico
     };
     const instan = match[p1];
     if(!instan) throw {status:404, message: "Token no valido :/"}

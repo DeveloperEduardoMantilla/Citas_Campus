@@ -13,7 +13,7 @@ appVerifyPaciente.use((req, res, next)=>{
     let {iat, exp, ...newPayload} = payload;
     payload=newPayload;
     
-    let clone = JSON.stringify(classToPlain(plainToClass(estructuraDto("Paciente").class, {}, {ignoreDecorators:true})));
+    let clone = JSON.stringify(classToPlain(plainToClass(estructuraDto("paciente").class, {}, {ignoreDecorators:true})));
     let verify = clone === JSON.stringify(payload);
     (!verify) ? res.status(406).send({status:406, message:"Token no valido para (Paciente)"}): next();
 })
@@ -21,7 +21,7 @@ appVerifyPaciente.use((req, res, next)=>{
 
 dtoData.use(async (req,res,next)=>{
     try {
-        let data = plainToClass(estructuraDto('Paciente').class, req.body);
+        let data = plainToClass(estructuraDto('paciente').class, req.body);
         await validate(data);
         req.body = JSON.parse(JSON.stringify(data));
         next();

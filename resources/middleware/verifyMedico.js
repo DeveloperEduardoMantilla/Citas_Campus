@@ -4,24 +4,24 @@ import {Router} from "express";
 import { estructuraDto } from "../controller/jwt.js";
 import { validate } from 'class-validator';
 
-const appVerifyCita = Router();
+const appVerifyMedico = Router();
 const dtoData = Router();
 
-appVerifyCita.use((req, res, next)=>{
+appVerifyMedico.use((req, res, next)=>{
     if(req.rateLimits) return;
     let {payload} = req.data;
     let {iat, exp, ...newPayload} = payload;
     payload=newPayload;
     
-    let clone = JSON.stringify(classToPlain(plainToClass(estructuraDto("cita").class, {}, {ignoreDecorators:true})));
+    let clone = JSON.stringify(classToPlain(plainToClass(estructuraDto("medico").class, {}, {ignoreDecorators:true})));
     let verify = clone === JSON.stringify(payload);
-    (!verify) ? res.status(406).send({status:406, message:"Token no valido para (Cita)"}): next();
+    (!verify) ? res.status(406).send({status:406, message:"Token no valido para (Medico)"}): next();
 })
 
 
 dtoData.use(async (req,res,next)=>{
     try {
-        let data = plainToClass(estructuraDto('cita').class, req.body);
+        let data = plainToClass(estructuraDto('medico').class, req.body);
         await validate(data);
         req.body = JSON.parse(JSON.stringify(data));
         next();
@@ -31,6 +31,6 @@ dtoData.use(async (req,res,next)=>{
 });
 
 export{
-    appVerifyCita,
+    appVerifyMedico,
     dtoData
 }
