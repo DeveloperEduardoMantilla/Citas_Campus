@@ -1,6 +1,6 @@
 import express from "express";
 import {conx} from "../db/atlas.js";
-import {appVerifyPaciente, dtoData} from "../middleware/verifyPaciente.js";
+import {appVerifyPaciente} from "../middleware/verifyPaciente.js";
 
 const appPaciente = express();
 

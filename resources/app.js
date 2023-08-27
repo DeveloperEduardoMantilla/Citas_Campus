@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import paciente from '../resources/routes/paciente.js';
+import cita from '../resources/routes/citas.js';
 import {JWT, JWTVerify, limitAPi } from "./controller/jwt.js";
 
 dotenv.config();
@@ -10,6 +11,7 @@ appExpress.use(express.json());
 
 appExpress.use("/token", JWT);
 appExpress.use("/paciente", JWTVerify, limitAPi(), paciente);
+appExpress.use("/cita", JWTVerify, limitAPi(), cita);
 
 appExpress.use("/",(req,res)=>{
     res.json({status:"404",message:"Hola Crack, te cuento que no haz establecido una ruta valida."})
