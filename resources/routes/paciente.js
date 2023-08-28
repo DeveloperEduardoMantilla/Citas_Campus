@@ -172,4 +172,54 @@ appPaciente.get("/consultorios/:idPaciente", appVerifyPaciente, async(req, res)=
     }
 })
 
+appPaciente.get("/citas/:idGenero", appVerifyPaciente, async(req, res)=>{
+  try {
+      let idGenero = parseInt(req.params.idGenero);
+
+      let medicoNumeroMat=/^[1-9][0-9]*$/;
+
+      if (!medicoNumeroMat.test(idGenero)) {
+        res.status(400).json({message:"Formato idGenero es inválido. Utiliza solo digitos positivos"});
+        return;
+      }
+      let db = await conx();
+      let collection = await db.collection("cita");
+      let consult = await collection
+      .aggregate([
+        {
+            $lookup: {
+                from: "usuario",
+                localField: "cit_datosUsuario",
+                foreignField: "usu_id",
+                as: "usuario"
+            }
+        },
+        {
+            $unwind: "$usuario"
+        },
+        {
+            $match: {
+                "usuario.usu_genero": idGenero,
+                "cit_estadoCita": 1
+            }
+        },
+        {
+          $project: {
+            "_id":0,
+            "cita_codigo":"$cit_codigo",
+            "cita_fecha":"$cit_fecha",
+            "cita_estadoCita":"$cit_estadoCita",
+            "cita_numeroMatriculaMedico":"$cit_medico",
+            "cita_estado":"atendida",
+            "cita_usuario":"$usuario.usu_nombre"
+          }
+        }
+    ])
+    .toArray();
+    res.status(200).send(consult);
+    } catch (e) {
+      res.status(500).send("Erro=> "+e);
+    }
+})
+
 export default appPaciente;
