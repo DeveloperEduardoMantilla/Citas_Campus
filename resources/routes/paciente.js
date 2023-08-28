@@ -127,4 +127,49 @@ appPaciente.get("/consultoria/:idPaciente", appVerifyPaciente, async(req, res)=>
       }
 })
 
+appPaciente.get("/consultorios/:idPaciente", appVerifyPaciente, async(req, res)=>{
+  try {
+      let pacienteId = parseInt(req.params.idPaciente);
+      let db = await conx();
+      let collection = await db.collection("cita");
+      let consult = await collection
+      .aggregate([
+        {
+            $match: {
+                "cit_datosUsuario": pacienteId
+            }
+        },
+        {
+            $lookup: {
+                from: "medico",
+                localField: "cit_medico",
+                foreignField: "med_nroMatriculaProsional",
+                as: "medico"
+            }
+        },
+        {
+            $unwind: "$medico"
+        },
+        {
+            $lookup: {
+                from: "consultorio",
+                localField: "medico.med_consultorio",
+                foreignField: "cons_codigo",
+                as: "consultorio"
+            }
+        },
+        {
+            $project: {
+                "_id": 0,
+                "consultorio.cons_nombre": 1
+            }
+        }
+    ])
+    .toArray();
+    res.status(200).send(consult);
+    } catch (e) {
+      res.status(500).send("Erro=> "+e);
+    }
+})
+
 export default appPaciente;
