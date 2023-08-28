@@ -27,6 +27,14 @@ appPaciente.get("/", appVerifyPaciente, async(req, res)=>{
 appPaciente.get("/:idPaciente", appVerifyPaciente, async(req, res)=>{
     try {
         let pacienteId = parseInt(req.params.idPaciente);
+
+        let validateNumero=/^[1-9][0-9]*$/;
+
+        if (!validateNumero.test(pacienteId)) {
+          res.status(400).json({message:"Formato idPaciente es inválido. Utiliza solo digitos positivos"});
+          return;
+        }
+
         let db = await conx();
         let collection = await db.collection("cita");
         let consult = await collection
@@ -49,6 +57,14 @@ appPaciente.get("/:idPaciente", appVerifyPaciente, async(req, res)=>{
 appPaciente.get("/medico/:idMedico", appVerifyPaciente, async(req, res)=>{
     try {
         let medicoId = parseInt(req.params.idMedico);
+
+        let validateNumero=/^[1-9][0-9]*$/;
+
+        if (!validateNumero.test(medicoId)) {
+          res.status(400).json({message:"Formato idMedico es inválido. Utiliza solo digitos positivos"});
+          return;
+        }
+
         let db = await conx();
         let collection = await db.collection("cita");
         let consult = await collection
@@ -70,6 +86,14 @@ appPaciente.get("/medico/:idMedico", appVerifyPaciente, async(req, res)=>{
 appPaciente.get("/consultoria/:idPaciente", appVerifyPaciente, async(req, res)=>{
     try {
         let pacienteId = parseInt(req.params.idPaciente);
+
+        let validateNumero=/^[1-9][0-9]*$/;
+
+        if (!validateNumero.test(pacienteId)) {
+          res.status(400).json({message:"Formato idPaciente es inválido. Utiliza solo digitos positivos"});
+          return;
+        }
+
         let db = await conx();
         let collection = await db.collection("cita");
         let consult = await collection
@@ -130,6 +154,14 @@ appPaciente.get("/consultoria/:idPaciente", appVerifyPaciente, async(req, res)=>
 appPaciente.get("/consultorios/:idPaciente", appVerifyPaciente, async(req, res)=>{
   try {
       let pacienteId = parseInt(req.params.idPaciente);
+      
+      let validateNumero=/^[1-9][0-9]*$/;
+
+      if (!validateNumero.test(pacienteId)) {
+        res.status(400).json({message:"Formato idPaciente es inválido. Utiliza solo digitos positivos"});
+        return;
+      }
+
       let db = await conx();
       let collection = await db.collection("cita");
       let consult = await collection
@@ -182,6 +214,7 @@ appPaciente.get("/citas/:idGenero", appVerifyPaciente, async(req, res)=>{
         res.status(400).json({message:"Formato idGenero es inválido. Utiliza solo digitos positivos"});
         return;
       }
+
       let db = await conx();
       let collection = await db.collection("cita");
       let consult = await collection
